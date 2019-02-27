@@ -32,9 +32,9 @@
     
     runtimer = [[BFSRuntimer alloc] init];
 //    [runtimer testRuntime_SendMsg];
-//    [runtimer testRuntime_InterceptMethods];
+    [runtimer testRuntime_InterceptMethods];
 //    [BFSRuntimer addInstanceMethod:@selector(instanceMethod)];
-    [runtimer testRuntime_AddNewMethod];
+//    [runtimer testRuntime_AddNewMethod];
 }
 
 // KVO

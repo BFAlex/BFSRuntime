@@ -52,12 +52,13 @@ void instanceMethod2(id self, SEL _cmd, int a)
     return NO;
 }
 
+
+
 + (BOOL)resolveInstanceMethod:(SEL)sel {
     NSLog(@"%@:%@", NSStringFromSelector(_cmd), NSStringFromSelector(sel));
     
     // 动态添加方法
-    [self addInstanceMethod:sel];
-    
+//    [self addInstanceMethod:sel];
     return YES;
 }
 
@@ -76,15 +77,34 @@ void instanceMethod2(id self, SEL _cmd, int a)
     }
 }
 
+#pragma mark - Runtime method
+
 - (id)forwardingTargetForSelector:(SEL)aSelector {
     NSLog(@"%@:%@", NSStringFromSelector(_cmd), NSStringFromSelector(aSelector));
 //    return [[BFSRuntimer2 alloc] init];
     return nil;
 }
 
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
+    NSLog(@"%@, %@", NSStringFromSelector(_cmd), NSStringFromSelector(aSelector));
+    if ([NSStringFromSelector(aSelector) isEqualToString:@"instanceMethod"]) {
+        return [NSMethodSignature signatureWithObjCTypes:"v@:"];
+    }
+    
+    return [super methodSignatureForSelector:aSelector];
+}
+
+// 收集漂流瓶的港口？
 - (void)forwardInvocation:(NSInvocation *)anInvocation {
     NSLog(@"%@, %@", NSStringFromSelector(_cmd), anInvocation);
+    
+    SEL sel = anInvocation.selector;
+    BFSRuntimer2 *otherObj = [[BFSRuntimer2 alloc] init];
+    if ([otherObj respondsToSelector:sel]) {
+        NSLog(@"漂流瓶找到执行者了：%@", NSStringFromSelector(sel));
+    }
 }
+
 
 
 // ---------------------
