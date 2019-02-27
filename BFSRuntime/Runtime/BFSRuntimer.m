@@ -81,7 +81,10 @@ void instanceMethod2(id self, SEL _cmd, int a)
 
 - (id)forwardingTargetForSelector:(SEL)aSelector {
     NSLog(@"%@:%@", NSStringFromSelector(_cmd), NSStringFromSelector(aSelector));
-//    return [[BFSRuntimer2 alloc] init];
+    if ([NSStringFromSelector(aSelector) isEqualToString:@"instanceMethod"]) {
+        return [[BFSRuntimer2 alloc] init];
+    }
+    
     return nil;
 }
 
