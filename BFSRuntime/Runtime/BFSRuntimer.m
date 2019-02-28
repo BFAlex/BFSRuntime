@@ -56,9 +56,9 @@ void instanceMethod2(id self, SEL _cmd, int a)
 
 + (BOOL)resolveInstanceMethod:(SEL)sel {
     NSLog(@"%@:%@", NSStringFromSelector(_cmd), NSStringFromSelector(sel));
-    
-    // 动态添加方法
+        // 动态添加方法
 //    [self addInstanceMethod:sel];
+    
     return YES;
 }
 
@@ -81,9 +81,9 @@ void instanceMethod2(id self, SEL _cmd, int a)
 
 - (id)forwardingTargetForSelector:(SEL)aSelector {
     NSLog(@"%@:%@", NSStringFromSelector(_cmd), NSStringFromSelector(aSelector));
-    if ([NSStringFromSelector(aSelector) isEqualToString:@"instanceMethod"]) {
-        return [[BFSRuntimer2 alloc] init];
-    }
+//    if ([NSStringFromSelector(aSelector) isEqualToString:@"instanceMethod"]) {
+//        return [[BFSRuntimer2 alloc] init];
+//    }
     
     return nil;
 }
