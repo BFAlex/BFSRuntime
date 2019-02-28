@@ -11,6 +11,7 @@
 #import <objc/runtime.h>    // 包含对类、成员变量、属性、方法的操作
 #import <objc/message.h>    // 包含消息机制
 #import "BFSRuntimer2.h"
+#import "BFSRuntimer+test.h"
 
 
 @interface BFSRuntimer() {
@@ -47,19 +48,11 @@ void instanceMethod2(id self, SEL _cmd, int a)
     
 }
 
-+ (BOOL)resolveClassMethod:(SEL)sel {
-    NSLog(@"%@:%@", NSStringFromSelector(_cmd), NSStringFromSelector(sel));
-    return NO;
-}
-
-
-
-+ (BOOL)resolveInstanceMethod:(SEL)sel {
-    NSLog(@"%@:%@", NSStringFromSelector(_cmd), NSStringFromSelector(sel));
-        // 动态添加方法
-//    [self addInstanceMethod:sel];
+void instanceMethod3(id self, SEL _cmd, NSString *a)
+{
+    NSLog(@"instanceMethod3");
+    NSLog(@"【%@】%@:%@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), a);
     
-    return YES;
 }
 
 + (void)addInstanceMethod:(SEL)sel {
@@ -73,11 +66,27 @@ void instanceMethod2(id self, SEL _cmd, int a)
         NSLog(@"打印关联属性的获取结果：%@", associateProperty);
         BFSRuntimer *rt = [[self alloc] init];
         [rt testRuntime_SendMsg];
-        class_getInstanceSize(rt);
+        if (rt) {
+            size_t size = class_getInstanceSize(rt);
+            NSLog(@"instance size: %zu", size);
+        }
     }
 }
 
 #pragma mark - Runtime method
+
++ (BOOL)resolveClassMethod:(SEL)sel {
+    NSLog(@"%@:%@", NSStringFromSelector(_cmd), NSStringFromSelector(sel));
+    return NO;
+}
+
++ (BOOL)resolveInstanceMethod:(SEL)sel {
+    NSLog(@"%@:%@", NSStringFromSelector(_cmd), NSStringFromSelector(sel));
+    // 动态添加方法
+    //    [self addInstanceMethod:sel];
+    
+    return NO;
+}
 
 - (id)forwardingTargetForSelector:(SEL)aSelector {
     NSLog(@"%@:%@", NSStringFromSelector(_cmd), NSStringFromSelector(aSelector));
@@ -108,9 +117,61 @@ void instanceMethod2(id self, SEL _cmd, int a)
     }
 }
 
+#pragma mark - Runtime的应用
+#pragma mark
 
+#pragma mark - API
 
-// ---------------------
+- (void)testAssociateUsage {
+    [self setObjSpecialName:@"AssocaiteUasge Test"];
+    NSString *result = [self objSpecialName];
+    NSLog(@"Category Assocaitive Usage: %@", result);
+}
+// 添加类方法
+- (void)testClassAddMethod {
+    // instanceMethod2
+    SEL selector = @selector(instanceMethod3);
+//    class_getMethodImplementation(<#Class  _Nullable __unsafe_unretained cls#>, <#SEL  _Nonnull name#>)
+//    method_getImplementation(<#Method  _Nonnull m#>)
+    BOOL result = class_addMethod([self class], selector, (IMP)instanceMethod3, "v@:");
+    if (result) {
+        [self performSelector:@selector(instanceMethod3) withObject:@"ClassAddMethod" afterDelay:0];
+    }
+}
+
+- (void)testReplaceMehtods {
+    NSLog(@"before replace");
+    [self method1];
+    [self method2];
+    [self startReplaceMethods];
+    NSLog(@"after replace");
+    [self method1];
+    [self method2];
+}
+- (void)startReplaceMethods {
+    
+    SEL sel1 = @selector(method1);
+    SEL sel2 = @selector(method2);
+    Method method1 = class_getClassMethod([self class], sel1);
+    Method method2 = class_getClassMethod([self class], sel2);
+    IMP imp1 = method_getImplementation(method1);
+    IMP imp2 = method_getImplementation(method2);
+    class_replaceMethod([self class], sel2, imp1, method_getTypeEncoding(method1));
+    method_exchangeImplementations(method1, method2);  
+    
+}
+
+- (void)method1 {
+    NSLog(@"111%@", NSStringFromSelector(_cmd));
+}
+- (void)method2 {
+    NSLog(@"222%@", NSStringFromSelector(_cmd));
+}
+
+- (void)testInfo {
+    
+}
+
 - (void)testRuntime_SendMsg {
     
     unsigned int ivarCount;

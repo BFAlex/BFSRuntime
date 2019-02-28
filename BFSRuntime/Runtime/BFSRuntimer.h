@@ -17,6 +17,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)testRuntime_SendMsg;
 - (void)testRuntime_InterceptMethods;
 - (void)testRuntime_AddNewMethod;
+// 增加属性
+- (void)testAssociateUsage;
+// 方法的添加和替换
+- (void)testClassAddMethod;
+- (void)testReplaceMehtods;
+
+- (void)testInfo;
 
 void instanceMethod2(id self, SEL _cmd, int a);
 

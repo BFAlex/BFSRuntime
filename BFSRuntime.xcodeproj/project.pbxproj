@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C46313742227BDCB00F7C27E /* BFSRuntimer+test.m in Sources */ = {isa = PBXBuildFile; fileRef = C46313732227BDCB00F7C27E /* BFSRuntimer+test.m */; };
 		C4DD7402221A4D9300721EE2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4DD7401221A4D9300721EE2 /* AppDelegate.m */; };
 		C4DD7405221A4D9300721EE2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4DD7404221A4D9300721EE2 /* ViewController.m */; };
 		C4DD7408221A4D9300721EE2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4DD7406221A4D9300721EE2 /* Main.storyboard */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C46313722227BDCB00F7C27E /* BFSRuntimer+test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BFSRuntimer+test.h"; sourceTree = "<group>"; };
+		C46313732227BDCB00F7C27E /* BFSRuntimer+test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "BFSRuntimer+test.m"; sourceTree = "<group>"; };
 		C4DD73FD221A4D9300721EE2 /* BFSRuntime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BFSRuntime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4DD7400221A4D9300721EE2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C4DD7401221A4D9300721EE2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -51,6 +54,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C46313712227BD3000F7C27E /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				C46313722227BDCB00F7C27E /* BFSRuntimer+test.h */,
+				C46313732227BDCB00F7C27E /* BFSRuntimer+test.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		C4DD73F4221A4D9300721EE2 = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +82,7 @@
 		C4DD73FF221A4D9300721EE2 /* BFSRuntime */ = {
 			isa = PBXGroup;
 			children = (
+				C46313712227BD3000F7C27E /* Category */,
 				C4DD741D221A85CE00721EE2 /* Runtime */,
 				C4DD7416221A607400721EE2 /* KVO */,
 				C4DD7400221A4D9300721EE2 /* AppDelegate.h */,
@@ -179,6 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4DD741C221A60CE00721EE2 /* BFSChildren.m in Sources */,
+				C46313742227BDCB00F7C27E /* BFSRuntimer+test.m in Sources */,
 				C4DD7405221A4D9300721EE2 /* ViewController.m in Sources */,
 				C4DD7410221A4D9B00721EE2 /* main.m in Sources */,
 				C4DD7423221A9E2900721EE2 /* BFSRuntimer2.m in Sources */,
